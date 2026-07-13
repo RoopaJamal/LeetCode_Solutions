@@ -1,37 +1,19 @@
 class Solution {
     public int candy(int[] ratings) {
-
-        int n = ratings.length;
-
-        int[] candies = new int[n];
-
-        // everyone gets 1 candy
-        Arrays.fill(candies, 1);
-
-        // left -> right
-        for(int i = 1; i < n; i++) {
-
-            if(ratings[i] > ratings[i - 1]) {
-                candies[i] = candies[i - 1] + 1;
-            }
+        int[] res=new int[ratings.length];
+        // Arrays.fill(res, 1);
+        res[0]=1;
+        for(int i=1;i<ratings.length;i++){
+            if(ratings[i]>ratings[i-1]) res[i]=res[i-1]+1;
+            else res[i]=1;
         }
-
-        // right -> left
-        for(int i = n - 2; i >= 0; i--) {
-
-            if(ratings[i] > ratings[i + 1]) {
-
-                candies[i] =
-                    Math.max(candies[i], candies[i + 1] + 1);
-            }
+        for(int i=ratings.length-2;i>=0;i--){
+            if(ratings[i]>ratings[i+1]) res[i]=Math.max(res[i],res[i+1]+1);
         }
-
-        int total = 0;
-
-        for(int c : candies) {
-            total += c;
+        int sum=0;
+        for(int i=0;i<res.length;i++){
+            sum+=res[i];
         }
-
-        return total;
+        return sum;
     }
 }
